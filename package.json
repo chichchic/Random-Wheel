@@ -1,0 +1,36 @@
+{
+  "name": "random_wheel",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "npx ts-node ./out/main.js",
+    "build": "tsc && npx webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chichchic/Random-Wheel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chichchic/Random-Wheel/issues"
+  },
+  "homepage": "https://github.com/chichchic/Random-Wheel#readme",
+  "devDependencies": {
+    "@types/node": "^15.12.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^5.2.6",
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^5.3.1",
+    "node-sass": "^6.0.0",
+    "postcss-loader": "^6.1.0",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^2.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4",
+    "webpack": "^5.39.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
