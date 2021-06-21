@@ -6,6 +6,8 @@ class Wheel {
   $ctx: CanvasRenderingContext2D
   proposition:proposition[]
   rotateAngle: number;
+  speed: number;
+  isRun: boolean;
   constructor($target: HTMLElement){
     this.$target = $target;
     this.$canvas = document.createElement('canvas')
@@ -16,7 +18,8 @@ class Wheel {
     this.proposition =  [{label: '돌림판', rate: 33.333}, {label: '돌림판', rate: 33.333}, {label: '돌림판', rate: 33.333}]
     this.rotateAngle = 0;
     this.render();
-    this.roll(400);
+    this.speed = 0;
+    this.isRun = false;
   }
   render(){
     const ctx = this.$ctx;
@@ -34,13 +37,25 @@ class Wheel {
       ctx.stroke();
     })
   }
-  roll(targetAngle: number, speed = 10){
+  roll(){
     this.$ctx.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
     this.render()
-    if(this.rotateAngle <= targetAngle){
-      this.rotateAngle += speed;
-      requestAnimationFrame(this.roll.bind(this, targetAngle, speed))
+    if(this.speed > 0){
+      this.rotateAngle += this.speed;
+      requestAnimationFrame(this.roll.bind(this))
     }
+  }
+  run() {
+    this.isRun = true;
+    this.speed = 10;
+    this.roll();
+  }
+  stop():number | undefined {
+    if(this.speed > 0) {
+      this.speed -= 0.3;
+      return requestAnimationFrame(this.stop.bind(this))
+    }
+    this.isRun = false
   }
 }
 
