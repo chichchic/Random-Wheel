@@ -9,6 +9,7 @@ class App {
   $boardSide: HTMLDivElement;
   $rollButton: HTMLButtonElement;
   items: string[];
+  wheel: Wheel;
   constructor($target: HTMLElement, wheelName: string) {
     this.$target = $target;
     this.$app = document.createElement('div');
@@ -25,15 +26,15 @@ class App {
     const title: HTMLHeadingElement = document.createElement('h1');
     title.textContent = wheelName;
     this.$wheelSide.appendChild(title);
-    const wheel = new Wheel(this.$wheelSide);
+    this.wheel = new Wheel(this.$wheelSide);
     this.$rollButton = document.createElement('button');
     this.$rollButton.textContent = '시작';
     this.$rollButton.onclick = () => {
-      if (wheel.isRun) {
-        wheel.stop();
+      if (this.wheel.isRun) {
+        this.wheel.stop();
         this.$rollButton.textContent = '시작';
       } else {
-        wheel.run();
+        this.wheel.run();
         this.$rollButton.textContent = '멈춤';
       }
     };
@@ -48,6 +49,7 @@ class App {
   }
   setItems(items: string[]) {
     this.items = items;
+    this.wheel.setProposition(items);
   }
 }
 

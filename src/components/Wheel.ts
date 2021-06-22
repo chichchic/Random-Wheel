@@ -16,16 +16,25 @@ class Wheel {
     this.$ctx = this.$canvas.getContext('2d') as CanvasRenderingContext2D;
     this.$target.appendChild(this.$canvas);
     this.proposition = [
-      { label: '돌림판', rate: 33.333 },
-      { label: '돌림판', rate: 33.333 },
-      { label: '돌림판', rate: 33.333 },
+      { label: '돌림판', rate: 50 },
+      { label: '돌림판', rate: 50 },
     ];
     this.rotateAngle = 0;
     this.render();
     this.speed = 0;
     this.isRun = false;
   }
+  setProposition(items: string[]) {
+    this.proposition = items.map((label) => ({
+      label,
+      rate: Math.floor((100 / items.length) * 1000) / 1000,
+    }));
+    console.log(this.proposition, 'proposition');
+    this.rotateAngle = 0;
+    this.render();
+  }
   render() {
+    this.$ctx.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
     const ctx = this.$ctx;
     let accAngle = this.rotateAngle;
     this.proposition.forEach(({ label, rate }, index) => {
@@ -48,7 +57,6 @@ class Wheel {
     });
   }
   roll() {
-    this.$ctx.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
     this.render();
     if (this.speed > 0) {
       this.rotateAngle += this.speed;
