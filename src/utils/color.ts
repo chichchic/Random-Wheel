@@ -23,9 +23,9 @@ const convertDeci2Hex = function (decimal: number) {
 };
 
 export const makeRandomColor = function () {
-  const red = Math.floor(Math.random() * 256);
-  const green = Math.floor(Math.random() * 256);
-  const yellow = Math.floor(Math.random() * 256);
+  const red = Math.floor(Math.random() * 216) + 40;
+  const green = Math.floor(Math.random() * 216) + 40;
+  const yellow = Math.floor(Math.random() * 216) + 40;
   const rgb = [red, green, yellow];
   return rgb.reduce((acc, val) => acc + convertDeci2Hex(val), '#');
 };
