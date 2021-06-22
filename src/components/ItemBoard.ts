@@ -1,3 +1,5 @@
+import { makeRandomColor } from 'src/utils/color';
+
 class ItemBoard {
   $itemBoard: HTMLUListElement;
   addEvent: (this: GlobalEventHandlers, e: FocusEvent) => void;
@@ -9,9 +11,9 @@ class ItemBoard {
     this.addEvent = addEvent;
     $target.appendChild(this.$itemBoard);
   }
-  render(itemlList: string[]) {
+  render(itemlList: item[]) {
     this.clear();
-    itemlList.forEach((label) => {
+    itemlList.forEach(({ label }) => {
       const item = this.makeItem('item', label);
       this.$itemBoard.appendChild(item);
     });
@@ -22,8 +24,11 @@ class ItemBoard {
   getItemsData() {
     const itemLables = this.$itemBoard.querySelectorAll('.item-lable');
     return Array.from(itemLables)
-      .map((el) => (el as HTMLInputElement).value)
-      .filter((val) => val !== '');
+      .map((el) => ({
+        label: (el as HTMLInputElement).value,
+        color: makeRandomColor(),
+      }))
+      .filter(({ label }) => label !== '');
   }
   makeItem(className: string, label = ''): HTMLLIElement {
     const item = document.createElement('li');

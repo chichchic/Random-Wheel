@@ -24,8 +24,8 @@ class Wheel {
     this.speed = 0;
     this.isRun = false;
   }
-  setProposition(items: string[]) {
-    this.proposition = items.map((label) => ({
+  setProposition(items: item[]) {
+    this.proposition = items.map(({ label }) => ({
       label,
       rate: Math.floor((100 / items.length) * 1000) / 1000,
     }));
