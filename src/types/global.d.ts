@@ -1,1 +1,4 @@
-type item = { label: string; color: string };
+interface item {
+  label: string;
+  color: string;
+}
