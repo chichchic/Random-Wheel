@@ -2,13 +2,14 @@ import 'style/index';
 
 import Wheel from 'src/components/Wheel';
 import ItemBoard from 'src/components/ItemBoard';
+
 class App {
   $target: HTMLElement;
   $app: HTMLDivElement;
   $wheelSide: HTMLDivElement;
   $boardSide: HTMLDivElement;
   $rollButton: HTMLButtonElement;
-  items: string[];
+  items: item[];
   wheel: Wheel;
   constructor($target: HTMLElement, wheelName: string) {
     this.$target = $target;
@@ -47,7 +48,7 @@ class App {
     });
     itemBoard.render([]);
   }
-  setItems(items: string[]) {
+  setItems(items: item[]) {
     this.items = items;
     this.wheel.setProposition(items);
   }

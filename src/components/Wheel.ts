@@ -1,4 +1,7 @@
-type proposition = { label: string; rate: number };
+import { makeRandomColor } from 'src/utils/color';
+interface proposition extends item {
+  rate: number;
+}
 
 class Wheel {
   $target: HTMLElement;
@@ -16,8 +19,8 @@ class Wheel {
     this.$ctx = this.$canvas.getContext('2d') as CanvasRenderingContext2D;
     this.$target.appendChild(this.$canvas);
     this.proposition = [
-      { label: '돌림판', rate: 50 },
-      { label: '돌림판', rate: 50 },
+      { label: '돌림판', color: makeRandomColor(), rate: 50 },
+      { label: '돌림판', color: makeRandomColor(), rate: 50 },
     ];
     this.rotateAngle = 0;
     this.render();
@@ -25,11 +28,11 @@ class Wheel {
     this.isRun = false;
   }
   setProposition(items: item[]) {
-    this.proposition = items.map(({ label }) => ({
+    this.proposition = items.map(({ label, color }) => ({
       label,
+      color,
       rate: Math.floor((100 / items.length) * 1000) / 1000,
     }));
-    console.log(this.proposition, 'proposition');
     this.rotateAngle = 0;
     this.render();
   }
@@ -37,12 +40,13 @@ class Wheel {
     this.$ctx.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
     const ctx = this.$ctx;
     let accAngle = this.rotateAngle;
-    this.proposition.forEach(({ label, rate }, index) => {
+    this.proposition.forEach(({ label, color, rate }, index) => {
       const beginRadian = (accAngle / 180) * Math.PI;
       accAngle += rate * 3.6;
       const endRadian = (accAngle / 180) * Math.PI;
       const beginX = 350 + 300 * Math.sin(beginRadian);
       const beginY = 350 - 300 * Math.cos(beginRadian);
+      ctx.fillStyle = color;
       ctx.beginPath();
       ctx.moveTo(350, 350);
       ctx.lineTo(beginX, beginY);
@@ -53,7 +57,7 @@ class Wheel {
         beginRadian - Math.PI * 0.5,
         endRadian - Math.PI * 0.5
       );
-      ctx.stroke();
+      ctx.fill();
     });
   }
   roll() {
