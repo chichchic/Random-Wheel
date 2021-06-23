@@ -41,6 +41,7 @@ class Wheel {
     const ctx = this.$ctx;
     ctx.lineWidth = 10;
     ctx.strokeStyle = 'black';
+    ctx.beginPath();
     ctx.arc(350, 350, 300, 0, 2 * Math.PI);
     ctx.stroke();
     let accAngle = this.rotateAngle;
@@ -48,12 +49,9 @@ class Wheel {
       const beginRadian = (accAngle / 180) * Math.PI;
       accAngle += rate * 3.6;
       const endRadian = (accAngle / 180) * Math.PI;
-      const beginX = 350 + 300 * Math.sin(beginRadian);
-      const beginY = 350 - 300 * Math.cos(beginRadian);
       ctx.fillStyle = color;
       ctx.beginPath();
       ctx.moveTo(350, 350);
-      ctx.lineTo(beginX, beginY);
       ctx.arc(
         350,
         350,
@@ -73,6 +71,15 @@ class Wheel {
       ctx.fillText(label, textX, textY);
       ctx.restore();
     });
+    ctx.fillStyle = '#000033';
+    ctx.beginPath();
+    ctx.moveTo(350, 60);
+    ctx.lineTo(350 - 15, 35);
+    ctx.lineTo(350 - 15, 25);
+    ctx.lineTo(350 + 15, 25);
+    ctx.lineTo(350 + 15, 35);
+    ctx.closePath();
+    ctx.fill();
   }
   roll() {
     this.render();
