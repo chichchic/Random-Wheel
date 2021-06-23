@@ -62,6 +62,16 @@ class Wheel {
         endRadian - Math.PI * 0.5
       );
       ctx.fill();
+      ctx.save();
+      ctx.translate(350, 350);
+      ctx.fillStyle = 'white';
+      ctx.font = '24px serif';
+      ctx.textBaseline = 'middle';
+      const textX = 40;
+      const textY = 0;
+      ctx.rotate(-Math.PI / 2 + (endRadian + beginRadian) / 2);
+      ctx.fillText(label, textX, textY);
+      ctx.restore();
     });
   }
   roll() {
