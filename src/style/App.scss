@@ -3,6 +3,11 @@
   width: 100%;
   height: 100%;
   font-family: 'Courier New', Courier, monospace;
+  & ol,
+  ul,
+  li {
+    list-style: none;
+  }
   & .wheel-side {
     flex-grow: 3;
     display: flex;

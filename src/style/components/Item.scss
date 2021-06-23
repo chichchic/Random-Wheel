@@ -1,0 +1,24 @@
+.item {
+  width: 300px;
+  padding: 10px 10px 10px 60px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  margin: 5px 0;
+  background-color: #fefefe;
+  position: relative;
+  &::before {
+    content: attr(data-index);
+    display: inline-block;
+    background-color: var(--item-color);
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: 2.375;
+    text-align: center;
+  }
+  & .label {
+    display: inline-block;
+    width: 100%;
+  }
+}

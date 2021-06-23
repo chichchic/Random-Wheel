@@ -13,8 +13,8 @@ class ItemBoard {
   }
   render(itemlList: item[]) {
     this.clear();
-    itemlList.forEach(({ label }) => {
-      const item = this.makeItem('item', label);
+    itemlList.forEach(({ label, color }, index) => {
+      const item = this.makeItem('item', color, label, index);
       this.$itemBoard.appendChild(item);
     });
     const emptyItem = this.makeItem('item empty');
@@ -30,8 +30,15 @@ class ItemBoard {
       }))
       .filter(({ label }) => label !== '');
   }
-  makeItem(className: string, label = ''): HTMLLIElement {
+  makeItem(
+    className: string,
+    color: string = '#ddd',
+    label = '',
+    index: number | '+' = '+'
+  ): HTMLLIElement {
     const item = document.createElement('li');
+    item.dataset.index = <string>index;
+    item.setAttribute('style', `--item-color: ${color}`);
     item.className = className;
     const itemLable = document.createElement('input');
     itemLable.className = 'item-lable';
