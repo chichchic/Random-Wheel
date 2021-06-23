@@ -39,6 +39,10 @@ class Wheel {
   render() {
     this.$ctx.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
     const ctx = this.$ctx;
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = 'black';
+    ctx.arc(350, 350, 300, 0, 2 * Math.PI);
+    ctx.stroke();
     let accAngle = this.rotateAngle;
     this.proposition.forEach(({ label, color, rate }, index) => {
       const beginRadian = (accAngle / 180) * Math.PI;
