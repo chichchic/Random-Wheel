@@ -45,7 +45,8 @@ class Wheel {
     ctx.arc(350, 350, 300, 0, 2 * Math.PI);
     ctx.stroke();
     let accAngle = this.rotateAngle;
-    this.proposition.forEach(({ label, color, rate }, index) => {
+    ctx.lineWidth = 5;
+    this.proposition.forEach(({ label, color, rate }) => {
       const beginRadian = (accAngle / 180) * Math.PI;
       accAngle += rate * 3.6;
       const endRadian = (accAngle / 180) * Math.PI;
@@ -62,12 +63,16 @@ class Wheel {
       ctx.fill();
       ctx.save();
       ctx.translate(350, 350);
-      ctx.fillStyle = 'white';
-      ctx.font = '24px serif';
       ctx.textBaseline = 'middle';
-      const textX = 40;
+      ctx.textAlign = 'center';
+      const textX = 90;
       const textY = 0;
       ctx.rotate(-Math.PI / 2 + (endRadian + beginRadian) / 2);
+      ctx.fillStyle = '#000033';
+      ctx.font = '24px Courier New';
+      ctx.strokeText(label, textX, textY);
+      ctx.fillStyle = 'white';
+      ctx.font = '24px Courier New';
       ctx.fillText(label, textX, textY);
       ctx.restore();
     });
@@ -90,14 +95,15 @@ class Wheel {
   }
   run() {
     this.isRun = true;
-    this.speed = 10;
+    this.speed = 20;
     this.roll();
   }
-  stop(): number | undefined {
+  stop(callback: () => void | undefined): number | undefined {
     if (this.speed > 0) {
-      this.speed -= 0.3;
-      return requestAnimationFrame(this.stop.bind(this));
+      this.speed -= 0.1;
+      return requestAnimationFrame(this.stop.bind(this, callback));
     }
+    callback();
     this.isRun = false;
   }
 }

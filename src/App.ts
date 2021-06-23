@@ -29,13 +29,22 @@ class App {
     this.$wheelSide.appendChild(title);
     this.wheel = new Wheel(this.$wheelSide);
     this.$rollButton = document.createElement('button');
+    this.$rollButton.className = 'roll-button hidden';
     this.$rollButton.textContent = '시작';
     this.$rollButton.onclick = () => {
+      //TODO: 항목들 추가/수정만 불가하도록 변경하기
       if (this.wheel.isRun) {
-        this.wheel.stop();
-        this.$rollButton.textContent = '시작';
+        this.$rollButton.classList.add('hidden');
+        this.wheel.stop(() => {
+          this.$boardSide.classList.remove('hidden');
+          this.$rollButton.classList.remove('hidden');
+          this.$rollButton.classList.remove('vibe');
+          this.$rollButton.textContent = '시작';
+        });
       } else {
         this.wheel.run();
+        this.$boardSide.classList.add('hidden');
+        this.$rollButton.classList.add('vibe');
         this.$rollButton.textContent = '멈춤';
       }
     };
@@ -51,6 +60,11 @@ class App {
   setItems(items: item[]) {
     this.items = items;
     this.wheel.setProposition(items);
+    if (this.items.length > 0) {
+      this.$rollButton.classList.remove('hidden');
+    } else {
+      this.$rollButton.classList.add('hidden');
+    }
   }
 }
 

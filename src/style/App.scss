@@ -2,10 +2,46 @@
   display: flex;
   width: 100%;
   height: 100%;
-  .wheel-side {
+  font-family: 'Courier New', Courier, monospace;
+  & .wheel-side {
     flex-grow: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .board-side {
+  & .board-side {
     flex-grow: 1;
+  }
+  & input {
+    border: none;
+    outline: none;
+  }
+  & .roll-button {
+    border: none;
+    border-radius: 8px;
+    font-size: 30px;
+    padding: 10px;
+    width: 100px;
+    background-color: #003344;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  & .hidden {
+    visibility: hidden;
+  }
+
+  & .vibe {
+    animation: 0.1s linear infinite alternate vibe;
+  }
+}
+
+@keyframes vibe {
+  from {
+    transform: translateY(-5px);
+  }
+  to {
+    transform: translateY(5px);
   }
 }
