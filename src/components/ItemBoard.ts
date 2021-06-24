@@ -14,7 +14,7 @@ class ItemBoard {
   render(itemlList: item[]) {
     this.clear();
     itemlList.forEach(({ label, color }, index) => {
-      const item = this.makeItem('item', color, label, index);
+      const item = this.makeItem('item', color, label, index + 1);
       this.$itemBoard.appendChild(item);
     });
     const emptyItem = this.makeItem('item empty');
