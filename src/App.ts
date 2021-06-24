@@ -3,6 +3,7 @@ import 'style/index';
 import Wheel from 'src/components/Wheel';
 import ItemBoard from 'src/components/ItemBoard';
 
+//TODO: 캔버스 해상도 높이기
 class App {
   $target: HTMLElement;
   $app: HTMLDivElement;
@@ -11,6 +12,7 @@ class App {
   $rollButton: HTMLButtonElement;
   items: item[];
   wheel: Wheel;
+  itemBoard: ItemBoard;
   constructor($target: HTMLElement, wheelName: string) {
     this.$target = $target;
     this.$app = document.createElement('div');
@@ -50,21 +52,51 @@ class App {
     };
     this.$wheelSide.appendChild(this.$rollButton);
 
-    const itemBoard = new ItemBoard(this.$boardSide, (e) => {
-      const boardItems = itemBoard.getItemsData();
-      this.setItems(boardItems);
-      itemBoard.render(this.items);
+    this.itemBoard = new ItemBoard(
+      this.$boardSide,
+      () => {
+        const boardItems = this.itemBoard.getItemsData();
+        this.setItems(boardItems);
+      },
+      (index) => {
+        this.removeItems(index);
+      }
+    );
+    //FIXME: 이벤트 진행 구조 변경 하기
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter' && e.target instanceof Element) {
+        console.log(
+          Array.from(e.target.classList).some((val) => {
+            console.log(val);
+            return val === 'item-label';
+          })
+        );
+        if (
+          Array.from(e.target.classList).some((val) => val === 'item-label')
+        ) {
+          const boardItems = this.itemBoard.getItemsData();
+          this.setItems(boardItems);
+          //XXX: firstChild로 호출할 경우 추후에 구조 변경시 오류 가능
+          (
+            document.querySelector('.empty')?.firstChild as HTMLInputElement
+          ).focus();
+        }
+      }
     });
-    itemBoard.render([]);
   }
   setItems(items: item[]) {
     this.items = items;
     this.wheel.setProposition(items);
     if (this.items.length > 0) {
       this.$rollButton.classList.remove('hidden');
+      this.itemBoard.render(items);
     } else {
       this.$rollButton.classList.add('hidden');
     }
+  }
+  removeItems(index: number) {
+    const filteredItems = this.items.filter((val, idx) => idx !== index);
+    this.setItems(filteredItems);
   }
 }
 

@@ -5,6 +5,9 @@
   margin: 5px 0;
   background-color: #fefefe;
   position: relative;
+  border-radius: 16px 0 0 16px;
+  overflow: hidden;
+  cursor: pointer;
   &::before {
     content: attr(data-index);
     display: inline-block;
@@ -20,5 +23,30 @@
   & .label {
     display: inline-block;
     width: 100%;
+  }
+  & .remove-button {
+    visibility: hidden;
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    border: solid 1px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+    cursor: pointer;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+  &:hover {
+    & .remove-button {
+      visibility: visible;
+    }
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   }
 }
