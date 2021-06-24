@@ -97,6 +97,11 @@ class Wheel {
     ctx.lineTo(350 + 15, 35);
     ctx.closePath();
     ctx.fill();
+    ctx.beginPath();
+    ctx.fillStyle = 'white';
+    ctx.arc(350, 350, 10, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
   }
   roll() {
     this.render();
