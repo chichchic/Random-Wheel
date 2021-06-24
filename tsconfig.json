@@ -9,6 +9,7 @@
     "strictNullChecks": true,
     "typeRoots": ["src/types"],
     "baseUrl": ".",
+    "removeComments": true,
     "paths": {
       "src/*": ["src/*"],
       "style/*": ["src/style/*"]
