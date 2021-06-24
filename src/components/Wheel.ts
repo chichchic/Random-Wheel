@@ -1,6 +1,6 @@
 import { makeRandomColor } from 'src/utils/color';
 interface proposition extends item {
-  rate: number;
+  angle: number;
 }
 
 class Wheel {
@@ -26,8 +26,8 @@ class Wheel {
   }
   init() {
     this.proposition = [
-      { label: '돌림판', color: makeRandomColor(), rate: 50 },
-      { label: '돌림판', color: makeRandomColor(), rate: 50 },
+      { label: '돌림판', color: makeRandomColor(), angle: 50 },
+      { label: '돌림판', color: makeRandomColor(), angle: 50 },
     ];
     this.rotateAngle = 30;
   }
@@ -35,7 +35,7 @@ class Wheel {
     this.proposition = items.map(({ label, color }) => ({
       label,
       color,
-      rate: Math.floor((100 / items.length) * 1000) / 1000,
+      angle: (Math.floor((100 / items.length) * 1000) / 1000) * 3.6,
     }));
     this.rotateAngle = 0;
     this.render();
@@ -43,8 +43,8 @@ class Wheel {
   render() {
     if (this.proposition.length === 0) {
       this.proposition = [
-        { label: '돌림판', color: makeRandomColor(), rate: 50 },
-        { label: '돌림판', color: makeRandomColor(), rate: 50 },
+        { label: '돌림판', color: makeRandomColor(), angle: 180 },
+        { label: '돌림판', color: makeRandomColor(), angle: 180 },
       ];
       this.rotateAngle = -30;
       console.log('init');
@@ -56,11 +56,11 @@ class Wheel {
     ctx.beginPath();
     ctx.arc(350, 350, 300, 0, 2 * Math.PI);
     ctx.stroke();
-    let accAngle = this.rotateAngle;
+    let accAngle = (this.rotateAngle + 360) % 360;
     ctx.lineWidth = 5;
-    this.proposition.forEach(({ label, color, rate }) => {
+    this.proposition.forEach(({ label, color, angle }) => {
       const beginRadian = (accAngle / 180) * Math.PI;
-      accAngle += rate * 3.6;
+      accAngle += angle;
       const endRadian = (accAngle / 180) * Math.PI;
       ctx.fillStyle = color;
       ctx.beginPath();
@@ -102,11 +102,30 @@ class Wheel {
     ctx.arc(350, 350, 10, 0, 2 * Math.PI);
     ctx.fill();
     ctx.stroke();
+    const curIndex = this.proposition
+      .reduce((acc, cur, index) => {
+        if (index === 0) {
+          acc.push(cur.angle);
+        } else {
+          acc.push(acc[index - 1] + cur.angle);
+        }
+        return acc;
+      }, new Array())
+      .findIndex((val) => val >= (360 - this.rotateAngle) % 360);
+    if (curIndex >= 0) {
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'center';
+      ctx.font = '20px Courier New';
+      ctx.strokeText(this.proposition[curIndex].label, 350, 5);
+      ctx.fillStyle = 'white';
+      ctx.fillText(this.proposition[curIndex].label, 350, 5);
+    }
   }
   roll() {
     this.render();
     if (this.speed > 0) {
       this.rotateAngle += this.speed;
+      this.rotateAngle = (this.rotateAngle + 360) % 360;
       requestAnimationFrame(this.roll.bind(this));
     }
   }
