@@ -18,14 +18,18 @@ class Wheel {
     this.$canvas.height = 700;
     this.$ctx = this.$canvas.getContext('2d') as CanvasRenderingContext2D;
     this.$target.appendChild(this.$canvas);
-    this.proposition = [
-      { label: '돌림판', color: makeRandomColor(), rate: 50 },
-      { label: '돌림판', color: makeRandomColor(), rate: 50 },
-    ];
+    this.proposition = [];
     this.rotateAngle = 0;
     this.render();
     this.speed = 0;
     this.isRun = false;
+  }
+  init() {
+    this.proposition = [
+      { label: '돌림판', color: makeRandomColor(), rate: 50 },
+      { label: '돌림판', color: makeRandomColor(), rate: 50 },
+    ];
+    this.rotateAngle = 30;
   }
   setProposition(items: item[]) {
     this.proposition = items.map(({ label, color }) => ({
@@ -37,6 +41,14 @@ class Wheel {
     this.render();
   }
   render() {
+    if (this.proposition.length === 0) {
+      this.proposition = [
+        { label: '돌림판', color: makeRandomColor(), rate: 50 },
+        { label: '돌림판', color: makeRandomColor(), rate: 50 },
+      ];
+      this.rotateAngle = -30;
+      console.log('init');
+    }
     this.$ctx.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
     const ctx = this.$ctx;
     ctx.lineWidth = 10;
