@@ -77,7 +77,7 @@ class Wheel {
       ctx.translate(350, 350);
       ctx.textBaseline = 'middle';
       ctx.textAlign = 'center';
-      const textX = 90;
+      const textX = 150;
       const textY = 0;
       ctx.rotate(-Math.PI / 2 + (endRadian + beginRadian) / 2);
       ctx.fillStyle = '#000033';
