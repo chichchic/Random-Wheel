@@ -11,7 +11,7 @@ class ResultBoard {
     setTimeout(() => {
       this.$resultBoard.classList.add('none-display');
       cb();
-    }, 2000);
+    }, 3000);
   }
 }
 
