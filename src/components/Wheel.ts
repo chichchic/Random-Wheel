@@ -11,6 +11,7 @@ class Wheel {
   rotateAngle: number;
   speed: number;
   isRun: boolean;
+  currentLabel: string;
   constructor($target: HTMLElement) {
     this.$target = $target;
     this.$canvas = document.createElement('canvas');
@@ -23,6 +24,7 @@ class Wheel {
     this.render();
     this.speed = 0;
     this.isRun = false;
+    this.currentLabel = '';
   }
   init() {
     this.proposition = [
@@ -116,9 +118,10 @@ class Wheel {
       ctx.textBaseline = 'top';
       ctx.textAlign = 'center';
       ctx.font = '20px Courier New';
-      ctx.strokeText(this.proposition[curIndex].label, 350, 5);
+      this.currentLabel = this.proposition[curIndex].label;
+      ctx.strokeText(this.currentLabel, 350, 5);
       ctx.fillStyle = 'white';
-      ctx.fillText(this.proposition[curIndex].label, 350, 5);
+      ctx.fillText(this.currentLabel, 350, 5);
     }
   }
   roll() {
@@ -134,12 +137,12 @@ class Wheel {
     this.speed = 20;
     this.roll();
   }
-  stop(callback: () => void | undefined): number | undefined {
+  stop(callback: (result: string) => void | undefined): number | undefined {
     if (this.speed > 0) {
       this.speed -= 0.1;
       return requestAnimationFrame(this.stop.bind(this, callback));
     }
-    callback();
+    callback(this.currentLabel);
     this.isRun = false;
   }
 }

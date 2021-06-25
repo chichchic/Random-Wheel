@@ -37,6 +37,10 @@
     visibility: hidden;
   }
 
+  & .none-display {
+    display: none;
+  }
+
   & .vibe {
     animation: 0.1s linear infinite alternate vibe;
   }

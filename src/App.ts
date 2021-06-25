@@ -2,6 +2,7 @@ import 'style/index';
 
 import Wheel from 'src/components/Wheel';
 import ItemBoard from 'src/components/ItemBoard';
+import ResultBoard from 'src/components/ResultBoard';
 
 import { makeRandomColor } from 'src/utils/color';
 
@@ -15,6 +16,7 @@ class App {
   items: item[];
   wheel: Wheel;
   itemBoard: ItemBoard;
+  resultBoard: ResultBoard;
   constructor($target: HTMLElement, wheelName: string) {
     this.$target = $target;
     this.$app = document.createElement('div');
@@ -39,9 +41,11 @@ class App {
       //TODO: 항목들 추가/수정만 불가하도록 변경하기
       if (this.wheel.isRun) {
         this.$rollButton.classList.add('hidden');
-        this.wheel.stop(() => {
-          this.$boardSide.classList.remove('hidden');
-          this.$rollButton.classList.remove('hidden');
+        this.wheel.stop((result) => {
+          this.resultBoard.show(result, () => {
+            this.$boardSide.classList.remove('hidden');
+            this.$rollButton.classList.remove('hidden');
+          });
           this.$rollButton.classList.remove('vibe');
           this.$rollButton.textContent = '시작';
         });
@@ -85,6 +89,8 @@ class App {
         }
       }
     });
+
+    this.resultBoard = new ResultBoard(this.$app);
   }
   getItemList() {
     return this.itemBoard.getItemsData().map(({ label }, index) => {
