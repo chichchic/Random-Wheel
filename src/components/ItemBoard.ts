@@ -1,5 +1,3 @@
-import { makeRandomColor } from 'src/utils/color';
-
 class ItemBoard {
   $itemBoard: HTMLUListElement;
   blurEvent: (this: GlobalEventHandlers, e: FocusEvent) => void;
@@ -29,7 +27,6 @@ class ItemBoard {
     return Array.from(itemLabels)
       .map((el) => ({
         label: (el as HTMLInputElement).value,
-        color: makeRandomColor(),
       }))
       .filter(({ label }) => label !== '');
   }

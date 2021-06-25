@@ -3,6 +3,8 @@ import 'style/index';
 import Wheel from 'src/components/Wheel';
 import ItemBoard from 'src/components/ItemBoard';
 
+import { makeRandomColor } from 'src/utils/color';
+
 //TODO: 캔버스 해상도 높이기
 class App {
   $target: HTMLElement;
@@ -55,7 +57,7 @@ class App {
     this.itemBoard = new ItemBoard(
       this.$boardSide,
       () => {
-        const boardItems = this.itemBoard.getItemsData();
+        const boardItems = this.getItemList();
         this.setItems(boardItems);
       },
       (index) => {
@@ -74,7 +76,7 @@ class App {
         if (
           Array.from(e.target.classList).some((val) => val === 'item-label')
         ) {
-          const boardItems = this.itemBoard.getItemsData();
+          const boardItems = this.getItemList();
           this.setItems(boardItems);
           //XXX: firstChild로 호출할 경우 추후에 구조 변경시 오류 가능
           (
@@ -82,6 +84,15 @@ class App {
           ).focus();
         }
       }
+    });
+  }
+  getItemList() {
+    return this.itemBoard.getItemsData().map(({ label }, index) => {
+      if (this.items.length > index) {
+        const color = this.items[index].color;
+        return { label, color };
+      }
+      return { label, color: makeRandomColor() };
     });
   }
   setItems(items: item[]) {
