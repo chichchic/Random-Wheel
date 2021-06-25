@@ -49,7 +49,6 @@ class Wheel {
         { label: '돌림판', color: makeRandomColor(), angle: 180 },
       ];
       this.rotateAngle = -30;
-      console.log('init');
     }
     this.$ctx.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
     const ctx = this.$ctx;
